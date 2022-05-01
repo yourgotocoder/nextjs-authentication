@@ -12,7 +12,7 @@ export default NextAuth({
       async authorize(credentials) {
         const client = await connectToDatabase();
 
-        const userExists = await client.db().collectiasync;
+        const userExists = await client.db().collection('users').findOne({ email: credentials.email});
 
         const isValid = await verifyPassword(
           credentials.password,
