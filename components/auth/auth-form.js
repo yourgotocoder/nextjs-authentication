@@ -1,8 +1,5 @@
-import { useState, useRef } from 'react';
-import { signIn } from 'next-auth/client';
-import { useRouter } from 'next/router';
-
-import classes from './auth-form.module.css';
+import { useState, useRef } from "react";
+import classes from "./auth-form.module.css";
 
 async function createUser(email, password) {
   const response = await fetch('/api/auth/signup', {
@@ -27,66 +24,54 @@ function AuthForm() {
   const passwordInputRef = useRef();
 
   const [isLogin, setIsLogin] = useState(true);
-  const router = useRouter();
+
 
   function switchAuthModeHandler() {
     setIsLogin((prevState) => !prevState);
   }
 
-  async function submitHandler(event) {
+  const submitHandler = async (event) => {
     event.preventDefault();
-
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    // optional: Add validation
-
     if (isLogin) {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email: enteredEmail,
-        password: enteredPassword,
-      });
-
-      if (!result.error) {
-        // set some auth state
-        router.replace('/profile');
-      }
-    } else {
+      //Login the user
+    } else if (!isLogin) {
       try {
         const result = await createUser(enteredEmail, enteredPassword);
         console.log(result);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err.message);
       }
     }
-  }
+  };
 
   return (
     <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required ref={emailInputRef} />
+          <label htmlFor="email">Your Email</label>
+          <input type="email" id="email" required ref={emailInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor='password'>Your Password</label>
+          <label htmlFor="password">Your Password</label>
           <input
-            type='password'
-            id='password'
+            type="password"
+            id="password"
             required
             ref={passwordInputRef}
           />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+          <button>{isLogin ? "Login" : "Create Account"}</button>
           <button
-            type='button'
+            type="button"
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
+            {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
       </form>
