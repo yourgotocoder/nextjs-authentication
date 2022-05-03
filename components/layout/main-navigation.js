@@ -1,26 +1,19 @@
-import Link from 'next/link';
-<<<<<<< HEAD
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/client";
 
-import Logo from './logo';
-import classes from './main-navigation.module.css';
-
-function MainNavigation() {
-=======
-import { useSession, signOut } from 'next-auth/client';
-
-import classes from './main-navigation.module.css';
+import classes from "./main-navigation.module.css";
 
 function MainNavigation() {
   const [session, loading] = useSession();
 
-  function logoutHandler() {
+  const logout = () => {
     signOut();
   }
 
 >>>>>>> 12-auth
   return (
     <header className={classes.header}>
-      <Link href='/'>
+      <Link href="/">
         <a>
 <<<<<<< HEAD
           <Logo />
@@ -41,17 +34,17 @@ function MainNavigation() {
 =======
           {!session && !loading && (
             <li>
-              <Link href='/auth'>Login</Link>
+              <Link href="/auth">Login</Link>
             </li>
           )}
           {session && (
             <li>
-              <Link href='/profile'>Profile</Link>
+              <Link href="/profile">Profile</Link>
             </li>
           )}
           {session && (
             <li>
-              <button onClick={logoutHandler}>Logout</button>
+              <button onClick={logout}>Logout</button>
             </li>
           )}
 >>>>>>> 12-auth
