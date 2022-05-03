@@ -1,7 +1,5 @@
-import StartingPageContent from '../components/starting-page/starting-page';
-
 function HomePage() {
-  return <StartingPageContent />;
+  return <p>Hello world!</p>;
 }
 
 export default HomePage;
